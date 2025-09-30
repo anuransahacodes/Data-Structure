@@ -1,76 +1,63 @@
 def reverse_string(s: str) -> str:
-    """Reverses a string using a stack."""
-    stack = list(s) 
-    
+    stack = list(s)
     reversed_list = []
     while stack:
         reversed_list.append(stack.pop())
-        
     return "".join(reversed_list)
 
-
 def check_balanced_parentheses(s: str) -> bool:
-    """Checks if parentheses, brackets, and braces are balanced."""
     stack = []
-
     mapping = {")": "(", "}": "{", "]": "["} 
 
     for char in s:
         if char in "([{":
-            
             stack.append(char)
-        elif char in ")]}":
-            
+        elif char in mapping:
             if not stack or stack.pop() != mapping[char]:
                 return False
                 
-    
     return not stack
 
-
 def simple_text_editor():
-    """Simulates text input and undo (pop) operations."""
     text_stack = []
 
     print("\n--- Simple Text Editor (Type and Undo) ---")
-    print("Commands: 'type <text>', 'undo', 'exit'")
+    print("Commands: 'TYPE <text>', 'UNDO', 'EXIT'")
 
     while True:
         current_text = "".join(text_stack)
         print(f"\n[TEXT: '{current_text}']")
         
-        user_input = input("Enter command: ").strip().lower()
+        user_input_raw = input("Enter command: ").strip()
+        user_command_lower = user_input_raw.lower() 
 
-        if user_input.startswith("type "):
-            # Push new text character by character
-            new_chars = user_input[5:]
+        if user_command_lower.startswith("type "):
+            new_chars = user_input_raw[5:]
             for char in new_chars:
                 text_stack.append(char)
             print(f"Typed: '{new_chars}'")
 
-        elif user_input == "undo":
+        elif user_command_lower == "undo":
             if text_stack:
-                text_stack.pop() # Pop the last character
+                text_stack.pop()
                 print("Undo successful.")
             else:
-                print("Nothing to undo (stack is empty).")
+                print("Nothing to undo.")
 
-        elif user_input == "exit":
+        elif user_command_lower == "exit":
             print(f"Final text: '{current_text}'")
             print("Exiting editor.")
             break
             
         else:
-            print("Invalid command. Use 'type <text>', 'undo', or 'exit'.")
-
+            print("Invalid command.")
 
 def main_menu():
-    """Provides a menu to run the three stack applications."""
     while True:
         print("\n=== STACK APPLICATIONS ===")
         print("1. Reverse String")
         print("2. Check Balanced Parentheses")
-        print("3. Simple Text Editor (Undo Operations)")
+        print("3. Simple Text Editor (Undo)")
         print("4. Exit")
         print("==========================")
 
@@ -95,7 +82,6 @@ def main_menu():
 
         else:
             print("Invalid choice. Please try again.")
-
 
 if __name__ == "__main__":
     main_menu()
